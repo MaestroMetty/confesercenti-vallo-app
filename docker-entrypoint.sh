@@ -1,30 +1,30 @@
 #!/bin/sh
 set -e
 
-# Read secrets and export as environment variables
+# Read secrets and export as environment variables (trim newlines)
 if [ -f /run/secrets/confesercenti_vallo_db_user ]; then
-    export DB_USER=$(cat /run/secrets/confesercenti_vallo_db_user)
+    export DB_USER=$(cat /run/secrets/confesercenti_vallo_db_user | tr -d '\n\r')
 fi
 
-if [ -f /run/secrets/confesercenti_vallo_   db_password ]; then
-    export DB_PASSWORD=$(cat /run/secrets/confesercenti_vallo_db_password)
+if [ -f /run/secrets/confesercenti_vallo_db_password ]; then
+    export DB_PASSWORD=$(cat /run/secrets/confesercenti_vallo_db_password | tr -d '\n\r')
 fi
 
 if [ -f /run/secrets/confesercenti_vallo_db_name ]; then
-    export DB_NAME=$(cat /run/secrets/confesercenti_vallo_db_name)
+    export DB_NAME=$(cat /run/secrets/confesercenti_vallo_db_name | tr -d '\n\r')
 fi
 
 if [ -f /run/secrets/confesercenti_vallo_jwt_secret ]; then
-    export JWT_SECRET=$(cat /run/secrets/confesercenti_vallo_jwt_secret)
+    export JWT_SECRET=$(cat /run/secrets/confesercenti_vallo_jwt_secret | tr -d '\n\r')
 fi
 
 if [ -f /run/secrets/confesercenti_vallo_app_url ]; then
-    export NEXT_PUBLIC_APP_URL=$(cat /run/secrets/confesercenti_vallo_app_url)
+    export NEXT_PUBLIC_APP_URL=$(cat /run/secrets/confesercenti_vallo_app_url | tr -d '\n\r')
 fi
 
 # Build DATABASE_URL from secrets
 if [ -n "$DB_USER" ] && [ -n "$DB_PASSWORD" ] && [ -n "$DB_NAME" ]; then
-    DB_HOST=${DB_HOST:-confesercenti-vallo-pwa-db}
+    DB_HOST=${DB_HOST:-confesercenti-vallo-pwa_db}
     DB_PORT=${DB_PORT:-5432}
     export DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
 fi

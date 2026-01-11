@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   app:
-    image: ghcr.io/maestrometty/confesercenti-vallo-pwa:0.1.0
+    image: ghcr.io/maestrometty/confesercenti-vallo-pwa:0.0.4
     environment:
       - NODE_ENV=production
       - HOSTNAME=0.0.0.0
@@ -16,7 +16,7 @@ services:
       - confesercenti_vallo_app_url
     user: "1001:1001"
 #    ports:
-#      - "127.0.0.1:3000:3000"
+#      - "127.0.0.1:3100:3000"
     volumes:
       - /srv/confesercenti-vallo/uploads:/app/uploads
     networks:
@@ -41,7 +41,7 @@ services:
         condition: any
         delay: 10s
         max_attempts: 5
-      replicas: 2
+      replicas: 1
       labels:
           - "traefik.enable=true"
 
@@ -52,7 +52,7 @@ services:
           - "traefik.http.services.confesercenti-vallo-app.loadbalancer.server.port=3000"
 
           # HTTP → HTTPS redirect router
-          - "traefik.http.routers.confesercenti-vallo-app-http.rule=Host(`confesercentivallo.it`)"
+          - "traefik.http.routers.confesercenti-vallo-app-http.rule=Host(`confesercenti.omniaplay.com`)"
           - "traefik.http.routers.confesercenti-vallo-app-http.entrypoints=web"
           - "traefik.http.routers.confesercenti-vallo-app-http.middlewares=redirect-to-https"
 
@@ -60,7 +60,7 @@ services:
           - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
           # HTTPS router
-          - "traefik.http.routers.confesercenti-vallo-app.rule=Host(`confesercentivallo.it`)"
+          - "traefik.http.routers.confesercenti-vallo-app.rule=Host(`confesercenti.omniaplay.com`)"
           - "traefik.http.routers.confesercenti-vallo-app.entrypoints=websecure"
           - "traefik.http.routers.confesercenti-vallo-app.tls.certresolver=letsencrypt"
 

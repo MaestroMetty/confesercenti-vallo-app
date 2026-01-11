@@ -84,7 +84,7 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Set entrypoint to load secrets as environment variables
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Start the application
 CMD ["node", "server.js"]
