@@ -1,0 +1,48 @@
+# Environment files
+*.env
+*.env.local
+*.env.*.local
+
+# Dependencies
+/node_modules
+
+# Database data
+/db-data
+/db_data
+/pgadmin-data
+
+# Build output
+/.next
+/out
+/.vercel
+
+# Docker files
+compose*.yaml
+Dockerfile*
+.dockerignore
+
+# Assets and media
+/assets
+/uploads
+
+# Version control
+.git
+.gitignore
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Testing
+/coverage
+/.nyc_output
+
+# Misc
+README.md
+*.md
+.eslintrc*
+.prettierrc*
+*.bat

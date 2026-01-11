@@ -1,0 +1,91 @@
+# ========================================
+# Stage 1: Dependencies
+# ========================================
+FROM node:18-alpine AS deps
+
+# Install dependencies only when needed
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Verify package-lock.json exists and is readable
+RUN ls -la package*.json
+
+# Install dependencies (including devDependencies for build)
+# Add verbose output for debugging
+RUN npm ci --verbose --legacy-peer-deps || (echo "npm ci failed, trying npm install..." && npm install --legacy-peer-deps)
+
+# ========================================
+# Stage 2: Builder
+# ========================================
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy all source files
+COPY . .
+
+# Set environment variable to enable standalone output
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Build the application
+RUN npm run build
+
+# ========================================
+# Stage 3: Runner (Production)
+# ========================================
+FROM node:18-alpine AS runner
+
+WORKDIR /app
+
+# Set production environment
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Copy necessary files from builder
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# Copy migration files and TypeScript source
+COPY --from=builder /app/drizzle ./drizzle
+COPY --from=builder /app/src/db ./src/db
+COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/package.json ./package.json
+
+# Install migration dependencies (this layer will be cached if package.json doesn't change)
+RUN npm install --production --no-save --legacy-peer-deps \
+    drizzle-orm@^0.44.6 drizzle-kit@^0.31.5 pg@^8.16.3 tsx@^4.19.2 dotenv@^17.2.3
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Create non-root user, uploads directory, and set permissions
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs && \
+    mkdir -p ./uploads ./.next/cache && \
+    chown -R nextjs:nodejs ./uploads ./.next ./node_modules ./src
+
+# Switch to non-root user
+USER nextjs
+
+# Expose port
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Set entrypoint to load secrets as environment variables
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+# Start the application
+CMD ["node", "server.js"]
+

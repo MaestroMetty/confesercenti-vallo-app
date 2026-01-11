@@ -1,0 +1,22 @@
+# Base image for development
+FROM node:18-alpine as dev
+
+# Add non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+WORKDIR /app
+
+# Copy configuration files first
+COPY package*.json ./
+COPY drizzle.config.ts ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the entire application source code
+COPY . .
+
+# Expose the development server port
+EXPOSE 3000
+
+# Run database migrations and start dev server
+CMD ["/bin/sh", "-c", "npx drizzle-kit push --force && npm run dev"]
