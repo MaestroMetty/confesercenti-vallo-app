@@ -169,11 +169,11 @@ export default function ErrorPageComponent({
             </div>
           </div>
 
-          {/* Energy Team Logo Section */}
+          {/* Confesercenti Vallo Logo Section */}
           <div className="mt-16 text-center">
             <Image
-              src="/imgs/energy_team_logo.jpg"
-              alt="Energy Team Logo"
+              src="/imgs/confesercenti_vallo_logo.jpg"
+              alt="Confesercenti Vallo Logo"
               width={200}
               height={80}
               className="mx-auto"

@@ -15,13 +15,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Energy Team - Fidelity",
-  description: "Energy Team - Fidelity",
+  title: "Confesercenti Vallo - Fidelity",
+  description: "Confesercenti Vallo - Fidelity",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Energy Team",
+    title: "Confesercenti Vallo",
   },
   other: {
     "mobile-web-app-capable": "yes",

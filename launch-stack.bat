@@ -16,7 +16,7 @@ if errorlevel 1 (
 echo Ensuring overlay networks exist...
 
 :: Loop through required overlay networks
-for %%N in (energy-team-pwa-db) do call :ensure_network %%N
+for %%N in (confesercenti-vallo-pwa-db) do call :ensure_network %%N
 
 goto :deploy
 
@@ -36,7 +36,7 @@ exit /b
 :deploy
 if "%~2"=="full-stack" (
     echo Deploying full stack including database...
-    docker stack deploy -c ./compose.prod.yaml energy-team-pwa --with-registry-auth
+    docker stack deploy -c ./compose.prod.yaml confesercenti-vallo-pwa --with-registry-auth
 ) else (
     echo Redeploying app service...
     for /f "tokens=* delims=" %%a in ('findstr /C:"image: ghcr.io/" compose.prod.yaml') do (
@@ -54,8 +54,8 @@ if "%~2"=="full-stack" (
     echo Pulling latest app image...
     docker pull !APP_IMAGE!
 
-    echo Updating energy-team-pwa_app service...
-    docker service update --image !APP_IMAGE! --force energy-team-pwa_app
+    echo Updating confesercenti-vallo-pwa_app service...
+    docker service update --image !APP_IMAGE! --force confesercenti-vallo-pwa_app
 )
 
 endlocal

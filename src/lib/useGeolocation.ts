@@ -34,7 +34,7 @@ export function useGeolocation() {
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1`,
         {
           headers: {
-            'User-Agent': 'EnergyTeamApp/1.0', // Required by Nominatim
+            'User-Agent': 'ConfesercentiValloApp/1.0', // Required by Nominatim
           },
         }
       );

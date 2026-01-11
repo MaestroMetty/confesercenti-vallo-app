@@ -22,28 +22,28 @@ Create the following Docker secrets using the commands below:
 
 ### 1. Database User
 ```bash
-echo "your_db_username" | docker secret create energy_team_db_user -
+echo "your_db_username" | docker secret create confesercenti_vallo_db_user -
 ```
 
 ### 2. Database Password
 ```bash
-echo "your_secure_db_password" | docker secret create energy_team_db_password -
+echo "your_secure_db_password" | docker secret create confesercenti_vallo_db_password -
 ```
 
 ### 3. Database Name
 ```bash
-echo "energy_team_db" | docker secret create energy_team_db_name -
+echo "confesercenti_vallo_db" | docker secret create confesercenti_vallo_db_name -
 ```
 
 ### 4. JWT Secret
 ```bash
 # Generate a secure random secret
-openssl rand -base64 32 | docker secret create energy_team_jwt_secret -
+openssl rand -base64 32 | docker secret create confesercenti_vallo_jwt_secret -
 ```
 
 ### 5. App URL
 ```bash
-echo "https://your-domain.com" | docker secret create energy_team_app_url -
+echo "https://your-domain.com" | docker secret create confesercenti_vallo_app_url -
 ```
 
 ## Create External Networks
@@ -87,7 +87,7 @@ launch-stack.bat production
 
 ### Manual Deployment
 ```bash
-docker stack deploy -c compose.prod.yaml energy-team-app --with-registry-auth
+docker stack deploy -c compose.prod.yaml confesercenti-vallo-pwa --with-registry-auth
 ```
 
 ## Managing Secrets
@@ -99,41 +99,41 @@ docker secret ls
 
 ### Inspect a secret (shows metadata, not the actual value)
 ```bash
-docker secret inspect energy_team_db_user
+docker secret inspect confesercenti_vallo_db_user
 ```
 
 ### Remove a secret (stop services first)
 ```bash
-docker secret rm energy_team_db_user
+docker secret rm confesercenti_vallo_db_user
 ```
 
 ### Update a secret
 Secrets are immutable. To update:
-1. Remove the old secret: `docker secret rm energy_team_db_user`
-2. Create new secret: `echo "new_value" | docker secret create energy_team_db_user -`
+1. Remove the old secret: `docker secret rm confesercenti_vallo_db_user`
+2. Create new secret: `echo "new_value" | docker secret create confesercenti_vallo_db_user -`
 3. Update the service: `docker service update --secret-rm old --secret-add new <service_name>`
 
 ## Managing the Stack
 
 ### View stack status
 ```bash
-docker stack ps energy-team-app
+docker stack ps confesercenti-vallo-app
 ```
 
 ### View service logs
 ```bash
-docker service logs energy-team-app_app
-docker service logs energy-team-app_db
+docker service logs confesercenti-vallo-app_app
+docker service logs confesercenti-vallo-app_db
 ```
 
 ### Update the stack
 ```bash
-docker stack deploy -c compose.prod.yaml energy-team-app
+docker stack deploy -c compose.prod.yaml confesercenti-vallo-app
 ```
 
 ### Remove the stack
 ```bash
-docker stack rm energy-team-app
+docker stack rm confesercenti-vallo-app
 ```
 
 ## Security Notes

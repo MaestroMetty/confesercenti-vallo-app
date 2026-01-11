@@ -111,7 +111,7 @@ export default function StoreList({ stores, onImagesLoaded }: StoreListProps) {
     if (stores.length === 0) {
         return (
             <div className="text-center py-8 text-gray-500">
-                <p>No stores found</p>
+                <p>Nessun negozio trovato</p>
             </div>
         );
     }

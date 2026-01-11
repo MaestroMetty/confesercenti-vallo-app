@@ -119,7 +119,7 @@ This script:
 
 Check container logs:
 ```bash
-docker service logs energy-team-app_app
+docker service logs confesercenti-vallo-pwa_app
 ```
 
 Look for:
@@ -178,7 +178,7 @@ The production Dockerfile copies:
 
 4. **Backup before major migrations**
    ```bash
-   docker exec postgres-db-energy-team-app pg_dump -U user dbname > backup.sql
+   docker exec postgres-db-confesercenti-vallo-app pg_dump -U user dbname > backup.sql
    ```
 
 ## 📚 Resources

@@ -20,9 +20,9 @@ if "%version%"=="" (
     exit 1
 )
 
-echo "Building energy-team-pwa image"
-docker build -f Dockerfile.prod -t ghcr.io/maestrometty/energy-team-pwa:%version% .
-echo "Pushing energy-team-pwa image"
-docker push ghcr.io/maestrometty/energy-team-pwa:%version%
+echo "Building confesercenti-vallo-pwa image"
+docker build -f Dockerfile.prod -t ghcr.io/maestrometty/confesercenti-vallo-pwa:%version% .
+echo "Pushing confesercenti-vallo-pwa image"
+docker push ghcr.io/maestrometty/confesercenti-vallo-pwa:%version%
 
 echo "Done"

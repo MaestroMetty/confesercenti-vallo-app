@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Energy Team',
-    short_name: 'Energy Team',
-    description: 'Energy Team - Fidelity Card App',
+    name: 'Confesercenti Vallo',
+    short_name: 'Confesercenti Vallo',
+    description: 'Confesercenti Vallo - Fidelity Card App',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

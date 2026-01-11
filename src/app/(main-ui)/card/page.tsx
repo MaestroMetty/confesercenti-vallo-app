@@ -79,11 +79,11 @@ export default function Card() {
                         </div>
                     </div>
 
-                    {/* Energy Team Logo Section */}
+                    {/* Confesercenti Vallo Logo Section */}
                     <div className="mt-16 text-center">
                         <Image
-                            src="/imgs/energy_team_andrecharge_logo.png"
-                            alt="Energy Team Logo"
+                            src="/imgs/confesercenti_vallo_full_logo.png"
+                            alt="Confesercenti Vallo Logo"
                             width={200}
                             height={80}
                             className="mx-auto"

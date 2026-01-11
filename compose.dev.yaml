@@ -6,10 +6,10 @@ services:
       context: .
       target: dev
       dockerfile: Dockerfile.dev      
-    image: energy-team-app-dev:latest
+    image: confesercenti-vallo-app-dev:latest
     ports:
       - 3000:3000
-    container_name: energy-team-app-dev
+    container_name: confesercenti-vallo-app-dev
     environment:
       - NODE_ENV=development
       - WATCHPACK_POLLING=true
@@ -36,7 +36,7 @@ services:
 
   db:
     image: postgres:18
-    container_name: postgres-db-energy-team-app
+    container_name: postgres-db-confesercenti-vallo-app
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -51,7 +51,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin-energy-team-app
+    container_name: pgadmin-confesercenti-vallo-app
     ports:
       - ${PGADMIN_PORT}:80
     environment:

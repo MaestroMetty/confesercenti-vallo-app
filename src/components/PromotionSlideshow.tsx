@@ -47,7 +47,7 @@ export default function PromotionSlideshow({ promotions, onImagesLoaded }: Promo
     const defaultImages = [
       {
         id: '1',
-        src: '/imgs/energy-team-promotion.png',
+        src: '/imgs/confesercenti_vallo_promotion.png',
         alt: 'No promotions available',
         title: 'Qui trovi le promozioni attive',
         subtitle: 'Controlla più tardi'

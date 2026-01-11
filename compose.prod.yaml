@@ -2,25 +2,25 @@ version: "3.8"
 
 services:
   app:
-    image: ghcr.io/maestrometty/energy-team-pwa:0.1.3
+    image: ghcr.io/maestrometty/confesercenti-vallo-pwa:0.1.0
     environment:
       - NODE_ENV=production
       - HOSTNAME=0.0.0.0
       - PORT=3000
       - NODE_OPTIONS=--dns-result-order=ipv4first
     secrets:
-      - energy_team_db_user
-      - energy_team_db_password
-      - energy_team_db_name
-      - energy_team_jwt_secret
-      - energy_team_app_url
+      - confesercenti_vallo_db_user
+      - confesercenti_vallo_db_password
+      - confesercenti_vallo_db_name
+      - confesercenti_vallo_jwt_secret
+      - confesercenti_vallo_app_url
     user: "1001:1001"
 #    ports:
 #      - "127.0.0.1:3000:3000"
     volumes:
-      - /srv/energy-team/uploads:/app/uploads
+      - /srv/confesercenti-vallo/uploads:/app/uploads
     networks:
-      - energy-team-pwa-db
+      - confesercenti-vallo-pwa-db
       - traefik-public
     healthcheck:
       test: ["CMD-SHELL", "node -e \"require('http').get('http://127.0.0.1:3000/api/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
@@ -49,44 +49,44 @@ services:
           - "traefik.swarm.network=traefik-public"
 
           # Service port (required in Swarm)
-          - "traefik.http.services.energy-team-app.loadbalancer.server.port=3000"
+          - "traefik.http.services.confesercenti-vallo-app.loadbalancer.server.port=3000"
 
           # HTTP → HTTPS redirect router
-          - "traefik.http.routers.energy-team-app-http.rule=Host(`app-energy.it`)"
-          - "traefik.http.routers.energy-team-app-http.entrypoints=web"
-          - "traefik.http.routers.energy-team-app-http.middlewares=redirect-to-https"
+          - "traefik.http.routers.confesercenti-vallo-app-http.rule=Host(`confesercentivallo.it`)"
+          - "traefik.http.routers.confesercenti-vallo-app-http.entrypoints=web"
+          - "traefik.http.routers.confesercenti-vallo-app-http.middlewares=redirect-to-https"
 
           - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
           - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
           # HTTPS router
-          - "traefik.http.routers.energy-team-app.rule=Host(`app-energy.it`)"
-          - "traefik.http.routers.energy-team-app.entrypoints=websecure"
-          - "traefik.http.routers.energy-team-app.tls.certresolver=letsencrypt"
+          - "traefik.http.routers.confesercenti-vallo-app.rule=Host(`confesercentivallo.it`)"
+          - "traefik.http.routers.confesercenti-vallo-app.entrypoints=websecure"
+          - "traefik.http.routers.confesercenti-vallo-app.tls.certresolver=letsencrypt"
 
           # Bind HTTPS router → service
-          - "traefik.http.routers.energy-team-app.service=energy-team-app"
+          - "traefik.http.routers.confesercenti-vallo-app.service=confesercenti-vallo-app"
 
           # Optional: re-use security headers
-          - "traefik.http.routers.energy-team-app.middlewares=sec-headers"
+          - "traefik.http.routers.confesercenti-vallo-app.middlewares=sec-headers"
 
   db:
     image: postgres:18
     environment:
-      POSTGRES_USER_FILE: /run/secrets/energy_team_db_user
-      POSTGRES_PASSWORD_FILE: /run/secrets/energy_team_db_password
-      POSTGRES_DB_FILE: /run/secrets/energy_team_db_name
+      POSTGRES_USER_FILE: /run/secrets/confesercenti_vallo_db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/confesercenti_vallo_db_password
+      POSTGRES_DB_FILE: /run/secrets/confesercenti_vallo_db_name
       POSTGRES_INITDB_ARGS: "-E UTF8"
     secrets:
-      - energy_team_db_user
-      - energy_team_db_password
-      - energy_team_db_name
+      - confesercenti_vallo_db_user
+      - confesercenti_vallo_db_password
+      - confesercenti_vallo_db_name
     volumes:
-      - /srv/energy-team/db-data:/var/lib/postgresql
+      - /srv/confesercenti-vallo/db-data:/var/lib/postgresql
     networks:
-      - energy-team-pwa-db
+      - confesercenti-vallo-pwa-db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/energy_team_db_user) -d $$(cat /run/secrets/energy_team_db_name)"]
+      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/confesercenti_vallo_db_user) -d $$(cat /run/secrets/confesercenti_vallo_db_name)"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -100,20 +100,20 @@ services:
     shm_size: 256mb
 
 networks:
-  energy-team-pwa-db:
+  confesercenti-vallo-pwa-db:
     external: true
   traefik-public:
     external: true
     
 secrets:
-  energy_team_db_user:
+  confesercenti_vallo_db_user:
     external: true
-  energy_team_db_password:
+  confesercenti_vallo_db_password:
     external: true
-  energy_team_db_name:
+  confesercenti_vallo_db_name:
     external: true
-  energy_team_jwt_secret:
+  confesercenti_vallo_jwt_secret:
     external: true
-  energy_team_app_url:
+  confesercenti_vallo_app_url:
     external: true
 

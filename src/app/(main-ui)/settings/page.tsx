@@ -96,8 +96,8 @@ export default function Settings() {
                         <div className="bg-white rounded-lg shadow-md p-6 text-center">
                             <div className="mb-4">
                                 <Image
-                                    src="/imgs/energy_team_logo.jpg"
-                                    alt="Energy Team Logo"
+                                    src="/imgs/confesercenti_vallo_logo.jpg"
+                                    alt="Confesercenti Vallo Logo"
                                     width={300}
                                     height={200}
                                     className="mx-auto rounded-lg"
@@ -186,8 +186,8 @@ export default function Settings() {
                     {/* RE-CHARGE Logo Section */}
                     <div className="mt-16 text-center">
                         <Image
-                            src="/imgs/recharge_logo.jpg"
-                            alt="RE-CHARGE energia"
+                            src="/imgs/confesercenti_logo.jpg"
+                            alt="Confesercenti"
                             width={200}
                             height={80}
                             className="mx-auto"
