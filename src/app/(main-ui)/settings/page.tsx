@@ -183,7 +183,7 @@ export default function Settings() {
                         )}
                     </div>
 
-                    {/* RE-CHARGE Logo Section */}
+                    {/* Confesercenti Logo Section */}
                     <div className="mt-16 text-center">
                         <Image
                             src="/imgs/confesercenti_logo.jpg"
